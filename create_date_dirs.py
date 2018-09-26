@@ -1,6 +1,7 @@
+#!/usr/bin/env python
 import argparse
 import time
-from util import parseDate, createDirectoryList, createKeepFile, createDirectory, printReport, createDateDirectories 
+from util import parseDate, createDateDirectories
 
 
 if __name__ == "__main__":
