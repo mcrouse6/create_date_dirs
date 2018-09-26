@@ -1,6 +1,6 @@
 import argparse
 import time
-from util import parseDate, createDirectoryList, createKeepFile, createDirectory, printReport 
+from util import parseDate, createDirectoryList, createKeepFile, createDirectory, printReport, createDateDirectories 
 
 
 if __name__ == "__main__":
@@ -27,11 +27,13 @@ if __name__ == "__main__":
     end_date = parseDate(args.end_date, "end")
 
     if start_date > end_date:
-        raise ValueError( "Start date must occur before provide end date")
+        raise ValueError("Start date must occur before provide end date")
 
     start = time.time()
     global_start = start
+    createDateDirectories(start_date, end_date, args.keep_file)
 
+    """
     directories, keep_file_list = createDirectoryList(start_date, end_date, args.keep_file)
     print("File list generation time: {}".format(time.time() - start))
 
@@ -43,7 +45,9 @@ if __name__ == "__main__":
         start = time.time()
         [createKeepFile(p) for p in keep_file_list]
         print("Keep file creation time: {}".format(time.time() - start))
-
     printReport(directories, keep_file_list)
+    """
+
     print("Total runtime: {}".format(time.time()- global_start))
+    
 
