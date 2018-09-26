@@ -1,11 +1,11 @@
-#Date Directory Command Line Utility#
+# Date Directory Command Line Utility
 
 This a command line tool that will take as input a start date and an end date and will create a directory (folder) tree structure on disk with a distinct root directory for each year in the range specified.  Each year directory has sub directories for each month and each month has subdirectories for each day within that month. 
 
 Additionally, the utility allows for an optional argument to allow the user  to indicate that a keep file is created in each directory. The keep file with the name “.keep” is placed in each and every created directory.
 
 
-##Installation Notes##
+## Installation Notes
 The command line was built using a vanilla python3 (ver. 3.6.5) and requires no additional outside dependencies.
 To configure for execution, your local system must have python3 installed. 
 
@@ -24,7 +24,7 @@ for a Linux system this can be done with the following command:
 chmod u+x create_date_dirs.py
 ```
 
-##Usage Details##
+## Usage Details
 
 
 For information about the arguments to the utility, including the keep functionality, you can look at the included help function:
@@ -52,7 +52,7 @@ optional arguments:
 ```
 
 
-##Examples##
+## Examples
 
 1. Date range without keep files: 
 - to create a set of directories as described above (based on a date range):
