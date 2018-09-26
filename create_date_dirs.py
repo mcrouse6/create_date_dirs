@@ -17,6 +17,9 @@ if __name__ == "__main__":
     parser.add_argument('--keep_file',
                             action='store_true',
                             help='If set, an empty ".keep" file will be placed in every directory created' )
+    parser.add_argument('--verbose',
+                            action='store_true',
+                            help='If set, more verbose reporting will be done')
 
     args = parser.parse_args()
 
@@ -25,13 +28,12 @@ if __name__ == "__main__":
     start_date = parseDate(args.start_date, "start")
     end_date = parseDate(args.end_date, "end")
 
-    if start_date > end_date:
-        raise ValueError("Start date must occur before provide end date")
-
     start = time.time()
     global_start = start
+
     createDateDirectories(start_date, end_date, args.keep_file)
 
-    print("Total runtime: {}".format(time.time()- global_start))
+    if args.verbose:
+        print("Total runtime: {}".format(time.time()- global_start))
     
 
