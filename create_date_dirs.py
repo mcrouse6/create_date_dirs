@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import argparse
 import time
-from util import parseDate, createDirectoryList, createKeepFile, createDirectory, printReport, createDateDirectories 
+from util import parseDate, createDirectoryList, createKeepFile, createDirectory, printReport  
 from multiprocessing import Pool
 
 
@@ -35,7 +35,6 @@ if __name__ == "__main__":
     if args.verbose:
       start = time.time()
       global_start = start
-    #createDateDirectories(start_date, end_date, args.keep_file)
 
     directories, keep_file_list = createDirectoryList(start_date, end_date, args.keep_file)
 
