@@ -31,8 +31,6 @@ if __name__ == "__main__":
     start_date = parseDate(args.start_date, "start")
     end_date = parseDate(args.end_date, "end")
 
-    if start_date > end_date:
-        raise ValueError("Start date must occur before provide end date")
 
     if args.verbose:
       start = time.time()
