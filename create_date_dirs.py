@@ -32,21 +32,6 @@ if __name__ == "__main__":
     global_start = start
     createDateDirectories(start_date, end_date, args.keep_file)
 
-    """
-    directories, keep_file_list = createDirectoryList(start_date, end_date, args.keep_file)
-    print("File list generation time: {}".format(time.time() - start))
-
-    start = time.time()
-    [createDirectory(d) for d in directories] 
-    print("Directory creation time: {}".format(time.time() - start))
-
-    if len(keep_file_list) > 0:
-        start = time.time()
-        [createKeepFile(p) for p in keep_file_list]
-        print("Keep file creation time: {}".format(time.time() - start))
-    printReport(directories, keep_file_list)
-    """
-
     print("Total runtime: {}".format(time.time()- global_start))
     
 
