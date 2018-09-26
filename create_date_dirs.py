@@ -5,7 +5,6 @@ from util import parseDate, createDirectoryList, createKeepFile, createDirectory
 
 if __name__ == "__main__":
 
-    # Initial cmd line argument parsing
     parser = argparse.ArgumentParser(description='This programs creates some date-based directories for receiving data files.')
     parser.add_argument('--start_date', 
                             required=True, 
