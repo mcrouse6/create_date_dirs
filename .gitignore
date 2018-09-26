@@ -1,3 +1,5 @@
 env3/*
 test_dir/*
 __pycache__*
+*.pyc
+*.docx
