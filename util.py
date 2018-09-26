@@ -32,13 +32,6 @@ def createKeepFile(file_pth):
     except:
         raise OSError("Cannot create the file: {}".format(file_pth))
 
-def generateDateRanges(pth, start, end, output_fmt):
-    directory_list = []
-    for i in range(start, end+1):
-        tmp_pth = pth + output_fmt.format(i) 
-        directory_list.append(tmp_pth)
-    return directory_list
-
 def createDirectoryList(start_date, end_date, keep_file=None, keep_file_name=".keep"):
     directory_list = []
     keep_file_list = []
