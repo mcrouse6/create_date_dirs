@@ -1,6 +1,8 @@
+#!/usr/bin/env python
 import argparse
 import time
 from util import parseDate, createDirectoryList, createKeepFile, createDirectory, printReport, createDateDirectories 
+from multiprocessing import Pool
 
 
 if __name__ == "__main__":
@@ -18,6 +20,9 @@ if __name__ == "__main__":
     parser.add_argument('--keep_file',
                             action='store_true',
                             help='If set, an empty ".keep" file will be placed in every directory created' )
+    parser.add_argument('--verbose',
+                            action='store_true',
+                            help='If set, more verbose reporting will be done')
 
     args = parser.parse_args()
 
@@ -29,25 +34,32 @@ if __name__ == "__main__":
     if start_date > end_date:
         raise ValueError("Start date must occur before provide end date")
 
-    start = time.time()
-    global_start = start
-    createDateDirectories(start_date, end_date, args.keep_file)
+    if args.verbose:
+      start = time.time()
+      global_start = start
+    #createDateDirectories(start_date, end_date, args.keep_file)
 
-    """
     directories, keep_file_list = createDirectoryList(start_date, end_date, args.keep_file)
-    print("File list generation time: {}".format(time.time() - start))
+
+    if args.verbose:
+      print("File list generation time: {}".format(time.time() - start))
 
     start = time.time()
-    [createDirectory(d) for d in directories] 
-    print("Directory creation time: {}".format(time.time() - start))
+    pool = Pool(processes=8)
+    pool.map(createDirectory, directories)
+
+    if args.verbose:
+      print("Directory creation time: {}".format(time.time() - start))
 
     if len(keep_file_list) > 0:
         start = time.time()
-        [createKeepFile(p) for p in keep_file_list]
-        print("Keep file creation time: {}".format(time.time() - start))
-    printReport(directories, keep_file_list)
-    """
+        pool.map(createKeepFile, keep_file_list)
+        if args.verbose:
+          print("Keep file creation time: {}".format(time.time() - start))
 
-    print("Total runtime: {}".format(time.time()- global_start))
+
+    if args.verbose:
+      printReport(directories, keep_file_list)
+      print("Total runtime: {}".format(time.time()- global_start))
     
 
