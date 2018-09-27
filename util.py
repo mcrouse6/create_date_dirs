@@ -30,6 +30,13 @@ def createKeepFile(file_pth):
     except:
         raise OSError("Cannot create the file: {}".format(file_pth))
 
+
+def createDateDirHelper(file_tup):
+    createDirectory(file_tup[0])
+    if len(file_tup) == 2:
+        createKeepFile(file_tup[1])
+
+
 def createDirectoryList(start_date, 
                         end_date, 
                         keep_file=False, 
@@ -40,6 +47,7 @@ def createDirectoryList(start_date,
         raise ValueError("Start date must occur before provide end date")
     directory_list = []
     keep_file_list = []
+
 
     day_delta = timedelta(days=1)
     cur_date = start_date
@@ -75,24 +83,81 @@ def createDateDirectories(start_date,
 
     day_delta = timedelta(days=1)
     cur_date = start_date
-    visited_map = {}
+    visited_map = {}  # binary map for determining if keeper file already captured
     while cur_date <= end_date:
-        date_pth = "{}/{:04d}/{:02d}/{:02d}".format(output_dir, cur_date.year, cur_date.month, cur_date.day)
+        date_pth = "{}/{:04d}/{:02d}/{:02d}".format(output_dir, 
+                                                    cur_date.year, 
+                                                    cur_date.month, 
+                                                    cur_date.day)
         createDirectory(date_pth)
         if keep_file:
-            createKeepFile("{}/{}".format(date_pth,  keep_file_name))
-            if cur_date.year not in visited_map:
+            createKeepFile("{}/{}".format(date_pth, keep_file_name))
+            if cur_date.year not in visited_map:   # handle year folder case for keeper file
                 visited_map[cur_date.year] = True
-                createKeepFile("{}/{:04d}/{}".format(output_dir, cur_date.year, keep_file_name))
+                createKeepFile("{}/{:04d}/{}".format(output_dir, 
+                                                     cur_date.year, 
+                                                     keep_file_name))
 
-            if str(cur_date.year)+str(cur_date.month) not in visited_map:
+            if str(cur_date.year)+str(cur_date.month) not in visited_map:  # handle month folder case for keeper file
                 visited_map[str(cur_date.year)+str(cur_date.month)] = True
-                createKeepFile("{}/{:04d}/{:02d}/{}".format(output_dir, cur_date.year, cur_date.month,  keep_file_name))
+                createKeepFile("{}/{:04d}/{:02d}/{}".format(output_dir, 
+                                                            cur_date.year, 
+                                                            cur_date.month,  
+                                                            keep_file_name))
 
         cur_date += day_delta
 
  
-        
+
+def createDirectoryTuple(start_date, 
+                        end_date, 
+                        keep_file=False, 
+                        keep_file_name=".keep", 
+                        output_dir="test_dir"):
+
+    if start_date > end_date:
+        raise ValueError("Start date must occur before provide end date")
+    directory_tuple_list = []    # contains the directory path and keep file path (if needed) for each date 
+
+    day_delta = timedelta(days=1)
+    cur_date = start_date
+    visited_map = {}    # binary map for determining if keeper file already captured
+    while cur_date <= end_date:
+        date_pth = "{}/{:04d}/{:02d}/{:02d}".format(output_dir, 
+                                                    cur_date.year, 
+                                                    cur_date.month, 
+                                                    cur_date.day)
+        if keep_file:  # if keep files are to be created 
+            keep_pth = "{}/{}".format(date_pth,  keep_file_name)
+            directory_tuple_list.append((date_pth,keep_pth))
+            if cur_date.year not in visited_map:  # handle year folder case for keeper file
+                visited_map[cur_date.year] = True
+                dir_pth = "{}/{:04d}".format(output_dir, 
+                                             cur_date.year)
+                keep_pth = "{}/{:04d}/{}".format(output_dir, 
+                                                 cur_date.year, 
+                                                 keep_file_name)
+                directory_tuple_list.append((dir_pth, keep_pth))
+
+            if str(cur_date.year)+str(cur_date.month) not in visited_map:  # handle month folder case for keeper file
+                visited_map[str(cur_date.year)+str(cur_date.month)] = True
+                dir_pth = "{}/{:04d}/{:02d}".format(output_dir, 
+                                                    cur_date.year, 
+                                                    cur_date.month)
+                keep_pth = "{}/{:04d}/{:02d}/{}".format(output_dir, 
+                                                        cur_date.year, 
+                                                        cur_date.month,  
+                                                        keep_file_name)
+                directory_tuple_list.append((dir_pth, keep_pth))
+
+            
+        else:
+            directory_tuple_list.append((date_pth))
+
+        cur_date += day_delta
+
+    return directory_tuple_list            
+
 def printReport(directories, keep_file_list):
     print("Date Directory Summary Report")
     print("Directories created: {}".format(len(directories)))
