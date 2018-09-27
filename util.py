@@ -30,7 +30,12 @@ def createKeepFile(file_pth):
     except:
         raise OSError("Cannot create the file: {}".format(file_pth))
 
-def createDirectoryList(start_date, end_date, keep_file=None, keep_file_name=".keep", output_dir="test_dir"):
+def createDirectoryList(start_date, 
+                        end_date, 
+                        keep_file=False, 
+                        keep_file_name=".keep", 
+                        output_dir="test_dir"):
+
     if start_date > end_date:
         raise ValueError("Start date must occur before provide end date")
     directory_list = []
@@ -59,7 +64,11 @@ def createDirectoryList(start_date, end_date, keep_file=None, keep_file_name=".k
             
     return directory_list, keep_file_list
 
-def createDateDirectories(start_date, end_date, keep_file=None, keep_file_name=".keep", output_dir="test_dir"):
+def createDateDirectories(start_date, 
+                        end_date, 
+                        keep_file=False, 
+                        keep_file_name=".keep", 
+                        output_dir="test_dir"):
     
     if start_date > end_date:
         raise ValueError("Start date must occur before provide end date")
