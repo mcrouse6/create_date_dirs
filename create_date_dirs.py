@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import argparse
 import time
-from util import parseDate, createDirectoryList, createKeepFile, createDirectory, printReport  
+from util import parseDate, createDirectoryTuple, createDateDirHelper 
 from multiprocessing import Pool
 
 
@@ -36,27 +36,13 @@ if __name__ == "__main__":
       start = time.time()
       global_start = start
 
-    directories, keep_file_list = createDirectoryList(start_date, end_date, args.keep_file)
-
-    if args.verbose:
-      print("File list generation time: {}".format(time.time() - start))
-
+    directories_tuple_list = createDirectoryTuple(start_date, end_date, args.keep_file) 
+    
     start = time.time()
     pool = Pool(processes=8)
-    pool.map(createDirectory, directories)
+    pool.map(createDateDirHelper, directories_tuple_list)
 
     if args.verbose:
       print("Directory creation time: {}".format(time.time() - start))
-
-    if len(keep_file_list) > 0:
-        start = time.time()
-        pool.map(createKeepFile, keep_file_list)
-        if args.verbose:
-          print("Keep file creation time: {}".format(time.time() - start))
-
-
-    if args.verbose:
-      printReport(directories, keep_file_list)
-      print("Total runtime: {}".format(time.time()- global_start))
     
 
