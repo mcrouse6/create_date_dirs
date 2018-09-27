@@ -10,11 +10,11 @@ if __name__ == "__main__":
     parser.add_argument('--start_date', 
                             required=True, 
                             type=str,
-                            help="Start of date range to generate date-based directories")
+                            help="Start of date range (format: YYYY-MM-DD) to generate date-based directories")
     parser.add_argument('--end_date', 
                             required=True, 
                             type=str,
-                            help="End of date range to generate date-based directories")
+                            help="End of date range (format: YYYY-MM-DD) to generate date-based directories")
     parser.add_argument('--keep_file',
                             action='store_true',
                             help='If set, an empty ".keep" file will be placed in every directory created' )

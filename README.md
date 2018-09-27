@@ -33,7 +33,7 @@ For information about the arguments to the utility, including the keep functiona
 ./create_date_dirs.py --help
 ```
 
-Or:
+and its output is:
 
 ```
 usage: create_date_dirs.py [-h] --start_date START_DATE --end_date END_DATE
@@ -44,8 +44,10 @@ This programs creates some date-based directories for receiving data files.
 optional arguments:
   -h, --help            show this help message and exit
   --start_date START_DATE
-                        Start of date range to generate date-based directories
-  --end_date END_DATE   End of date range to generate date-based directories
+                        Start of date range (format: YYYY-MM-DD) to generate
+                        date-based directories
+  --end_date END_DATE   End of date range (format: YYYY-MM-DD) to generate
+                        date-based directories
   --keep_file           If set, an empty ".keep" file will be placed in every
                         directory created
   --verbose             If set, more verbose reporting will be done
